@@ -294,7 +294,11 @@ public class AwsSdk2Transport implements OpenSearchTransport {
         Map<String, String> params = endpoint.queryParameters(request);
         if (params != null && !params.isEmpty()) {
             char sep = '?';
-            for (var ent : params.entrySet()) {
+            // for (var ent : params.entrySet()) {
+            
+            // Java 8 compat
+            for (Map.Entry<String, String> ent : params.entrySet()) {
+             
                 url.append(sep).append(ent.getKey()).append('=');
                 // url.append(URLEncoder.encode(ent.getValue(), StandardCharsets.UTF_8));
 
