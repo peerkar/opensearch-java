@@ -59,24 +59,31 @@ public class ClusterNodeCount implements JsonpSerializable {
 
     private final int total;
 
-    private final int votingOnly;
-
-    private final int dataCold;
+    @Nullable
+    private Integer votingOnly;
 
     @Nullable
-    private final Integer dataFrozen;
+    private Integer dataCold;
 
-    private final int dataContent;
+    @Nullable
+    private Integer dataFrozen;
 
-    private final int dataWarm;
+    @Nullable
+    private Integer dataContent;
 
-    private final int dataHot;
+    @Nullable
+    private Integer dataWarm;
 
-    private final int ml;
+    @Nullable
+    private Integer dataHot;
+
+    @Nullable
+    private Integer ml;
 
     private final int remoteClusterClient;
 
-    private final int transform;
+    @Nullable
+    private Integer transform;
 
     // ---------------------------------------------------------------------------------------------
 
@@ -87,16 +94,29 @@ public class ClusterNodeCount implements JsonpSerializable {
         this.ingest = ApiTypeHelper.requireNonNull(builder.ingest, this, "ingest");
         this.clusterManager = ApiTypeHelper.requireNonNull(builder.clusterManager, this, "clusterManager");
         this.total = ApiTypeHelper.requireNonNull(builder.total, this, "total");
-        this.votingOnly = ApiTypeHelper.requireNonNull(builder.votingOnly, this, "votingOnly");
-        this.dataCold = ApiTypeHelper.requireNonNull(builder.dataCold, this, "dataCold");
-        this.dataFrozen = builder.dataFrozen;
-        this.dataContent = ApiTypeHelper.requireNonNull(builder.dataContent, this, "dataContent");
-        this.dataWarm = ApiTypeHelper.requireNonNull(builder.dataWarm, this, "dataWarm");
-        this.dataHot = ApiTypeHelper.requireNonNull(builder.dataHot, this, "dataHot");
-        this.ml = ApiTypeHelper.requireNonNull(builder.ml, this, "ml");
-        this.remoteClusterClient = ApiTypeHelper.requireNonNull(builder.remoteClusterClient, this, "remoteClusterClient");
-        this.transform = ApiTypeHelper.requireNonNull(builder.transform, this, "transform");
+ 
+        // Not guaranteedly in the response
+        
+        // this.votingOnly = ApiTypeHelper.requireNonNull(builder.votingOnly, this, "votingOnly");
+        // this.dataCold = ApiTypeHelper.requireNonNull(builder.dataCold, this, "dataCold");
+        // this.dataFrozen = builder.dataFrozen;
+        // this.dataContent = ApiTypeHelper.requireNonNull(builder.dataContent, this, "dataContent");
+        // this.dataWarm = ApiTypeHelper.requireNonNull(builder.dataWarm, this, "dataWarm");
+        // this.dataHot = ApiTypeHelper.requireNonNull(builder.dataHot, this, "dataHot");
+        // this.ml = ApiTypeHelper.requireNonNull(builder.ml, this, "ml");       
 
+        this.votingOnly = builder.votingOnly;
+        this.dataCold = builder.dataCold;
+        this.dataFrozen = builder.dataFrozen;
+        this.dataContent = builder.dataContent;
+        this.dataWarm = builder.dataWarm;
+        this.dataHot = builder.dataHot;
+        this.ml = builder.ml;
+
+        this.remoteClusterClient = ApiTypeHelper.requireNonNull(builder.remoteClusterClient, this, "remoteClusterClient");
+
+        // this.transform = ApiTypeHelper.requireNonNull(builder.transform, this, "transform");
+        this.transform = builder.transform;
     }
 
     public static ClusterNodeCount of(Function<Builder, ObjectBuilder<ClusterNodeCount>> fn) {
@@ -138,55 +158,61 @@ public class ClusterNodeCount implements JsonpSerializable {
         return this.total;
     }
 
-    /**
-     * Required - API name: {@code voting_only}
-     */
-    public final int votingOnly() {
-        return this.votingOnly;
-    }
+	/**
+	 * Required - API name: {@code voting_only}
+	 */
+	@Nullable
+	public final Integer votingOnly() {
+		return this.votingOnly;
+	}
 
-    /**
-     * Required - API name: {@code data_cold}
-     */
-    public final int dataCold() {
-        return this.dataCold;
-    }
+	/**
+	 * Required - API name: {@code data_cold}
+	 */
+	@Nullable
+	public final Integer dataCold() {
+		return this.dataCold;
+	}
 
-    /**
-     * API name: {@code data_frozen}
-     */
-    @Nullable
-    public final Integer dataFrozen() {
-        return this.dataFrozen;
-    }
+	/**
+	 * API name: {@code data_frozen}
+	 */
+	@Nullable
+	public final Integer dataFrozen() {
+		return this.dataFrozen;
+	}
 
-    /**
-     * Required - API name: {@code data_content}
-     */
-    public final int dataContent() {
-        return this.dataContent;
-    }
+	/**
+	 * Required - API name: {@code data_content}
+	 */
+	@Nullable
+	public final Integer dataContent() {
+		return this.dataContent;
+	}
 
-    /**
-     * Required - API name: {@code data_warm}
-     */
-    public final int dataWarm() {
-        return this.dataWarm;
-    }
+	/**
+	 * Required - API name: {@code data_warm}
+	 */
+	@Nullable
+	public final Integer dataWarm() {
+		return this.dataWarm;
+	}
 
-    /**
-     * Required - API name: {@code data_hot}
-     */
-    public final int dataHot() {
-        return this.dataHot;
-    }
+	/**
+	 * Required - API name: {@code data_hot}
+	 */
+	@Nullable
+	public final Integer dataHot() {
+		return this.dataHot;
+	}
 
-    /**
-     * Required - API name: {@code ml}
-     */
-    public final int ml() {
-        return this.ml;
-    }
+	/**
+	 * Required - API name: {@code ml}
+	 */
+	@Nullable
+	public final Integer ml() {
+		return this.ml;
+	}
 
     /**
      * Required - API name: {@code remote_cluster_client}
@@ -198,9 +224,10 @@ public class ClusterNodeCount implements JsonpSerializable {
     /**
      * Required - API name: {@code transform}
      */
-    public final int transform() {
-        return this.transform;
-    }
+	@Nullable
+	public final Integer transform() {
+		return this.transform;
+	}
 
     /**
      * Serialize this object to JSON.
@@ -228,35 +255,48 @@ public class ClusterNodeCount implements JsonpSerializable {
         generator.writeKey("total");
         generator.write(this.total);
 
-        generator.writeKey("voting_only");
-        generator.write(this.votingOnly);
+        if (this.votingOnly != null) {
+			generator.writeKey("voting_only");
+			generator.write(this.votingOnly);
+		}
 
-        generator.writeKey("data_cold");
-        generator.write(this.dataCold);
+        if (this.dataCold != null) {
+            generator.writeKey("data_cold");
+            generator.write(this.dataCold);
+        }
 
         if (this.dataFrozen != null) {
             generator.writeKey("data_frozen");
             generator.write(this.dataFrozen);
-
         }
-        generator.writeKey("data_content");
-        generator.write(this.dataContent);
 
-        generator.writeKey("data_warm");
-        generator.write(this.dataWarm);
+        if (this.dataFrozen != null) {
+            generator.writeKey("data_content");
+            generator.write(this.dataContent);
+        }
 
-        generator.writeKey("data_hot");
-        generator.write(this.dataHot);
+        if (this.dataFrozen != null) {
+            generator.writeKey("data_warm");
+            generator.write(this.dataWarm);
+        }
 
-        generator.writeKey("ml");
-        generator.write(this.ml);
+        if (this.dataFrozen != null) {
+            generator.writeKey("data_hot");
+            generator.write(this.dataHot);
+        }
+
+        if (this.dataFrozen != null) {
+            generator.writeKey("ml");
+            generator.write(this.ml);
+        }
 
         generator.writeKey("remote_cluster_client");
         generator.write(this.remoteClusterClient);
 
-        generator.writeKey("transform");
-        generator.write(this.transform);
-
+        if (this.transform != null) {
+            generator.writeKey("transform");
+            generator.write(this.transform);
+        }
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -276,23 +316,30 @@ public class ClusterNodeCount implements JsonpSerializable {
 
         private Integer total;
 
+        @Nullable
         private Integer votingOnly;
-
+    
+        @Nullable
         private Integer dataCold;
-
+    
         @Nullable
         private Integer dataFrozen;
-
+    
+        @Nullable
         private Integer dataContent;
-
+    
+        @Nullable
         private Integer dataWarm;
-
+    
+        @Nullable
         private Integer dataHot;
-
+    
+        @Nullable
         private Integer ml;
 
         private Integer remoteClusterClient;
 
+        @Nullable
         private Integer transform;
 
         /**
@@ -335,61 +382,61 @@ public class ClusterNodeCount implements JsonpSerializable {
             return this;
         }
 
-        /**
-         * Required - API name: {@code voting_only}
-         */
-        public final Builder votingOnly(int value) {
-            this.votingOnly = value;
-            return this;
-        }
+		/**
+		 * Required - API name: {@code voting_only}
+		 */
+		public final Builder votingOnly(@Nullable Integer value) {
+			this.votingOnly = value;
+			return this;
+		}
 
-        /**
-         * Required - API name: {@code data_cold}
-         */
-        public final Builder dataCold(int value) {
-            this.dataCold = value;
-            return this;
-        }
+		/**
+		 * Required - API name: {@code data_cold}
+		 */
+		public final Builder dataCold(int value) {
+			this.dataCold = value;
+			return this;
+		}
 
-        /**
-         * API name: {@code data_frozen}
-         */
-        public final Builder dataFrozen(@Nullable Integer value) {
-            this.dataFrozen = value;
-            return this;
-        }
+		/**
+		 * API name: {@code data_frozen}
+		 */
+		public final Builder dataFrozen(@Nullable Integer value) {
+			this.dataFrozen = value;
+			return this;
+		}
 
-        /**
-         * Required - API name: {@code data_content}
-         */
-        public final Builder dataContent(int value) {
-            this.dataContent = value;
-            return this;
-        }
+		/**
+		 * Required - API name: {@code data_content}
+		 */
+		public final Builder dataContent(@Nullable Integer value) {
+			this.dataContent = value;
+			return this;
+		}
 
-        /**
-         * Required - API name: {@code data_warm}
-         */
-        public final Builder dataWarm(int value) {
-            this.dataWarm = value;
-            return this;
-        }
+		/**
+		 * Required - API name: {@code data_warm}
+		 */
+		public final Builder dataWarm(@Nullable Integer value) {
+			this.dataWarm = value;
+			return this;
+		}
 
-        /**
-         * Required - API name: {@code data_hot}
-         */
-        public final Builder dataHot(int value) {
-            this.dataHot = value;
-            return this;
-        }
+		/**
+		 * Required - API name: {@code data_hot}
+		 */
+		public final Builder dataHot(@Nullable Integer value) {
+			this.dataHot = value;
+			return this;
+		}
 
-        /**
-         * Required - API name: {@code ml}
-         */
-        public final Builder ml(int value) {
-            this.ml = value;
-            return this;
-        }
+		/**
+		 * Required - API name: {@code ml}
+		 */
+		public final Builder ml(@Nullable Integer value) {
+			this.ml = value;
+			return this;
+		}
 
         /**
          * Required - API name: {@code remote_cluster_client}
@@ -399,13 +446,13 @@ public class ClusterNodeCount implements JsonpSerializable {
             return this;
         }
 
-        /**
-         * Required - API name: {@code transform}
-         */
-        public final Builder transform(int value) {
-            this.transform = value;
-            return this;
-        }
+		/**
+		 * Required - API name: {@code transform}
+		 */
+		public final Builder transform(@Nullable Integer value) {
+			this.transform = value;
+			return this;
+		}
 
         /**
          * Builds a {@link ClusterNodeCount}.
