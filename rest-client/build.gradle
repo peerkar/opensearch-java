@@ -38,11 +38,6 @@ plugins {
     id 'java-library'
 }
 
-// Use the exact version properties of v2.8.0
-
-def versions = new Properties()
-file("buildSrc/version.properties").withInputStream { versions.load(it) }
- 
 targetCompatibility = JavaVersion.VERSION_1_8
 sourceCompatibility = JavaVersion.VERSION_1_8
 
@@ -57,4 +52,3 @@ dependencies {
   api "commons-codec:commons-codec:${versions.commonscodec}"
   api "commons-logging:commons-logging:${versions.commonslogging}"
 }
-
