@@ -13,6 +13,7 @@ import jakarta.json.stream.JsonParser;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
@@ -295,7 +296,14 @@ public class AwsSdk2Transport implements OpenSearchTransport {
             char sep = '?';
             for (var ent : params.entrySet()) {
                 url.append(sep).append(ent.getKey()).append('=');
-                url.append(URLEncoder.encode(ent.getValue(), StandardCharsets.UTF_8));
+                // url.append(URLEncoder.encode(ent.getValue(), StandardCharsets.UTF_8));
+
+                // Java 8 compat
+                try {
+                   url.append(URLEncoder.encode(ent.getValue(), StandardCharsets.UTF_8.name()));
+                } catch (UnsupportedEncodingException e) {
+                    throw new IllegalArgumentException("Unsupported encoding UTF_8");
+                }                
                 sep = '&';
             }
         }
@@ -355,7 +363,14 @@ public class AwsSdk2Transport implements OpenSearchTransport {
             char sep = url.indexOf("?") < 0 ? '?' : '&';
             for (Map.Entry<String, String> param : params.entrySet()) {
                 url.append(sep).append(param.getKey()).append('=');
-                url.append(URLEncoder.encode(param.getValue(), StandardCharsets.UTF_8));
+                // url.append(URLEncoder.encode(param.getValue(), StandardCharsets.UTF_8));
+
+                // Java 8 compat
+                try {
+                    url.append(URLEncoder.encode(param.getValue(), StandardCharsets.UTF_8.name()));
+                } catch (UnsupportedEncodingException e) {
+                    throw new IllegalArgumentException("Unsupported encoding UTF_8");
+                }
                 sep = '?';
             }
         }
