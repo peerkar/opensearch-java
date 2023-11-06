@@ -262,11 +262,23 @@ public class AwsSdk2Transport implements OpenSearchTransport {
                 .map(o -> o instanceof AwsSdk2TransportOptions ? ((AwsSdk2TransportOptions) o) : null)
                 .map(AwsSdk2TransportOptions::mapper)
                 .orElse(defaultMapper);
-            final int maxUncompressedSize = Optional.ofNullable(options)
-                .map(o -> o instanceof AwsSdk2TransportOptions ? ((AwsSdk2TransportOptions) o) : null)
-                .map(AwsSdk2TransportOptions::requestCompressionSize)
-                .or(() -> Optional.ofNullable(transportOptions.requestCompressionSize()))
-                .orElse(DEFAULT_REQUEST_COMPRESSION_SIZE);
+
+            // final int maxUncompressedSize = Optional.ofNullable(options)
+            //    .map(o -> o instanceof AwsSdk2TransportOptions ? ((AwsSdk2TransportOptions) o) : null)
+            //    .map(AwsSdk2TransportOptions::requestCompressionSize)
+            //    .or(() -> Optional.ofNullable(transportOptions.requestCompressionSize()))
+            //    .orElse(DEFAULT_REQUEST_COMPRESSION_SIZE);
+
+            // Java 8 compat
+            final int maxUncompressedSize;
+            if (options != null &&  options instanceof AwsSdk2TransportOptions) {
+                AwsSdk2TransportOptions awsSdk2TransportOptions = (AwsSdk2TransportOptions) options;
+                maxUncompressedSize = awsSdk2TransportOptions.requestCompressionSize();
+            } else if (transportOptions != null) {
+                maxUncompressedSize = transportOptions.requestCompressionSize();
+            } else {
+                maxUncompressedSize  = DEFAULT_REQUEST_COMPRESSION_SIZE;                
+            }
 
             OpenSearchRequestBodyBuffer buffer = new OpenSearchRequestBodyBuffer(mapper, maxUncompressedSize);
             buffer.addContent(request);
@@ -333,22 +345,45 @@ public class AwsSdk2Transport implements OpenSearchTransport {
             req.putHeader("x-amz-content-sha256", "required");
         }
 
-        boolean responseCompression = Optional.ofNullable(options)
-            .map(o -> o instanceof AwsSdk2TransportOptions ? ((AwsSdk2TransportOptions) o) : null)
-            .map(AwsSdk2TransportOptions::responseCompression)
-            .or(() -> Optional.ofNullable(transportOptions.responseCompression()))
-            .orElse(Boolean.TRUE);
+        // boolean responseCompression = Optional.ofNullable(options)
+        //    .map(o -> o instanceof AwsSdk2TransportOptions ? ((AwsSdk2TransportOptions) o) : null)
+        //    .map(AwsSdk2TransportOptions::responseCompression)
+        //    .or(() -> Optional.ofNullable(transportOptions.responseCompression()))
+        //    .orElse(Boolean.TRUE);
+        
+        // Java 8 compat
+        boolean responseCompression;
+        if (options != null &&  options instanceof AwsSdk2TransportOptions) {
+            AwsSdk2TransportOptions awsSdk2TransportOptions = (AwsSdk2TransportOptions) options;
+            responseCompression = awsSdk2TransportOptions.responseCompression();
+        } else if (transportOptions != null) {
+            responseCompression = transportOptions.responseCompression();
+        } else {
+            responseCompression = true;
+        }
+        
         if (responseCompression) {
             req.putHeader("Accept-Encoding", "gzip");
         } else {
             req.removeHeader("Accept-Encoding");
         }
 
-        final AwsCredentialsProvider credentials = Optional.ofNullable(options)
-            .map(o -> o instanceof AwsSdk2TransportOptions ? ((AwsSdk2TransportOptions) o) : null)
-            .map(AwsSdk2TransportOptions::credentials)
-            .or(() -> Optional.ofNullable(transportOptions.credentials()))
-            .orElse(DefaultCredentialsProvider.create());
+        // final AwsCredentialsProvider credentials = Optional.ofNullable(options)
+        //    .map(o -> o instanceof AwsSdk2TransportOptions ? ((AwsSdk2TransportOptions) o) : null)
+        //    .map(AwsSdk2TransportOptions::credentials)
+        //    .or(() -> Optional.ofNullable(transportOptions.credentials()))
+        //    .orElse(DefaultCredentialsProvider.create());
+
+        // Java 8 compat
+        final AwsCredentialsProvider credentials;
+        if (options != null &&  options instanceof AwsSdk2TransportOptions) {
+            AwsSdk2TransportOptions awsSdk2TransportOptions = (AwsSdk2TransportOptions) options;
+            credentials = awsSdk2TransportOptions.credentials();
+        } else if (transportOptions != null) {
+            credentials = transportOptions.credentials();
+        } else {
+            credentials = DefaultCredentialsProvider.create();
+        }
 
         Aws4SignerParams signerParams = Aws4SignerParams.builder()
             .awsCredentials(credentials.resolveCredentials())
