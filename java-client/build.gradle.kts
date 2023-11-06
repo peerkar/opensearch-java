@@ -153,7 +153,9 @@ dependencies {
     val jacksonDatabindVersion = "2.15.2"
 
     // Apache 2.0
-    implementation("org.opensearch.client", "opensearch-rest-client", opensearchVersion)
+    //implementation("org.opensearch.client", "opensearch-rest-client", opensearchVersion)
+    implementation(project(":rest-client"))
+ 
     testImplementation("org.opensearch.test", "framework", opensearchVersion)
 
     // Apache 2.0
