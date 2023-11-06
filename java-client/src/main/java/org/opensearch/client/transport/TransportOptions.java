@@ -32,6 +32,7 @@
 
 package org.opensearch.client.transport;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -98,7 +99,11 @@ public interface TransportOptions {
             if (headers.isEmpty()) {
                 headers = new ArrayList<>();
             }
-            headers.add(Map.entry(name, value));
+            // headers.add(Map.entry(name, value));
+
+            // Java 8 compat
+            headers.add(new AbstractMap.SimpleEntry<>(name, value));
+
             return this;
         }
 
