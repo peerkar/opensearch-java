@@ -41,6 +41,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+
 import org.opensearch.client.util.ObjectBuilder;
 
 /**
@@ -140,8 +142,18 @@ public interface TransportOptions {
         private final Function<List<String>, Boolean> onWarnings;
 
         protected DefaultImpl(BuilderImpl builder) {
-            this.headers = builder.headers.isEmpty() ? Collections.emptyList() : List.copyOf(builder.headers);
-            this.params = builder.queryParameters.isEmpty() ? Collections.emptyMap() : Map.copyOf(builder.queryParameters);
+            // this.headers = builder.headers.isEmpty() ? Collections.emptyList() : List.copyOf(builder.headers);
+
+            // Java 8 compat
+            this.headers = builder.headers.isEmpty() ? Collections.emptyList() : builder.headers.stream()
+                .collect(Collectors.toList());
+                
+            // this.params = builder.queryParameters.isEmpty() ? Collections.emptyMap() : Map.copyOf(builder.queryParameters);
+ 
+            // Java 8 compat      
+            this.params = builder.queryParameters.isEmpty() ? Collections.emptyMap() : Collections.unmodifiableMap(
+                new HashMap<>(builder.queryParameters));
+
             this.onWarnings = builder.onWarnings;
         }
 
