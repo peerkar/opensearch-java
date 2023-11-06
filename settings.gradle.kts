@@ -32,4 +32,5 @@
 
 rootProject.name = "opensearch-java"
 include("java-client")
+include("rest-client")
 include("samples")
