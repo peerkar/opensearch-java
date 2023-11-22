@@ -101,9 +101,7 @@ public interface TransportOptions {
             if (headers.isEmpty()) {
                 headers = new ArrayList<>();
             }
-            // headers.add(Map.entry(name, value));
-
-            // Java 8 compat
+            
             headers.add(new AbstractMap.SimpleEntry<>(name, value));
 
             return this;
@@ -142,15 +140,8 @@ public interface TransportOptions {
         private final Function<List<String>, Boolean> onWarnings;
 
         protected DefaultImpl(BuilderImpl builder) {
-            // this.headers = builder.headers.isEmpty() ? Collections.emptyList() : List.copyOf(builder.headers);
-
-            // Java 8 compat
             this.headers = builder.headers.isEmpty() ? Collections.emptyList() : builder.headers.stream()
                 .collect(Collectors.toList());
-                
-            // this.params = builder.queryParameters.isEmpty() ? Collections.emptyMap() : Map.copyOf(builder.queryParameters);
- 
-            // Java 8 compat      
             this.params = builder.queryParameters.isEmpty() ? Collections.emptyMap() : Collections.unmodifiableMap(
                 new HashMap<>(builder.queryParameters));
 

@@ -94,17 +94,6 @@ public class ClusterNodeCount implements JsonpSerializable {
         this.ingest = ApiTypeHelper.requireNonNull(builder.ingest, this, "ingest");
         this.clusterManager = ApiTypeHelper.requireNonNull(builder.clusterManager, this, "clusterManager");
         this.total = ApiTypeHelper.requireNonNull(builder.total, this, "total");
- 
-        // Not guaranteedly in the response
-        
-        // this.votingOnly = ApiTypeHelper.requireNonNull(builder.votingOnly, this, "votingOnly");
-        // this.dataCold = ApiTypeHelper.requireNonNull(builder.dataCold, this, "dataCold");
-        // this.dataFrozen = builder.dataFrozen;
-        // this.dataContent = ApiTypeHelper.requireNonNull(builder.dataContent, this, "dataContent");
-        // this.dataWarm = ApiTypeHelper.requireNonNull(builder.dataWarm, this, "dataWarm");
-        // this.dataHot = ApiTypeHelper.requireNonNull(builder.dataHot, this, "dataHot");
-        // this.ml = ApiTypeHelper.requireNonNull(builder.ml, this, "ml");       
-
         this.votingOnly = builder.votingOnly;
         this.dataCold = builder.dataCold;
         this.dataFrozen = builder.dataFrozen;
@@ -112,10 +101,7 @@ public class ClusterNodeCount implements JsonpSerializable {
         this.dataWarm = builder.dataWarm;
         this.dataHot = builder.dataHot;
         this.ml = builder.ml;
-
         this.remoteClusterClient = ApiTypeHelper.requireNonNull(builder.remoteClusterClient, this, "remoteClusterClient");
-
-        // this.transform = ApiTypeHelper.requireNonNull(builder.transform, this, "transform");
         this.transform = builder.transform;
     }
 

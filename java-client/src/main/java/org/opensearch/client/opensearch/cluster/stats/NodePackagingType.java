@@ -59,9 +59,6 @@ public class NodePackagingType implements JsonpSerializable {
     private NodePackagingType(Builder builder) {
 
         this.count = ApiTypeHelper.requireNonNull(builder.count, this, "count");
-
-        // Can be null
-        // this.flavor = ApiTypeHelper.requireNonNull(builder.flavor, this, "flavor");
         this.flavor = builder.flavor;
         this.type = ApiTypeHelper.requireNonNull(builder.type, this, "type");
 

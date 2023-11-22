@@ -1023,9 +1023,6 @@ public class RestClient implements Closeable {
                 } else {
                     long size;
                     try (InputStream is = getContent()) {                        
-                        // size = is.readAllBytes().length;
-                        
-                        // Java 8 compat  
                         is.reset();
                         byte[] bytes = new byte[is.available()];
                         DataInputStream dataInputStream = new DataInputStream(is);

@@ -263,13 +263,6 @@ public class AwsSdk2Transport implements OpenSearchTransport {
                 .map(AwsSdk2TransportOptions::mapper)
                 .orElse(defaultMapper);
 
-            // final int maxUncompressedSize = Optional.ofNullable(options)
-            //    .map(o -> o instanceof AwsSdk2TransportOptions ? ((AwsSdk2TransportOptions) o) : null)
-            //    .map(AwsSdk2TransportOptions::requestCompressionSize)
-            //    .or(() -> Optional.ofNullable(transportOptions.requestCompressionSize()))
-            //    .orElse(DEFAULT_REQUEST_COMPRESSION_SIZE);
-
-            // Java 8 compat
             final int maxUncompressedSize;
             if (options != null &&  options instanceof AwsSdk2TransportOptions) {
                 AwsSdk2TransportOptions awsSdk2TransportOptions = (AwsSdk2TransportOptions) options;
@@ -306,15 +299,11 @@ public class AwsSdk2Transport implements OpenSearchTransport {
         Map<String, String> params = endpoint.queryParameters(request);
         if (params != null && !params.isEmpty()) {
             char sep = '?';
-            // for (var ent : params.entrySet()) {
-            
-            // Java 8 compat
+
             for (Map.Entry<String, String> ent : params.entrySet()) {
              
                 url.append(sep).append(ent.getKey()).append('=');
-                // url.append(URLEncoder.encode(ent.getValue(), StandardCharsets.UTF_8));
 
-                // Java 8 compat
                 try {
                    url.append(URLEncoder.encode(ent.getValue(), StandardCharsets.UTF_8.name()));
                 } catch (UnsupportedEncodingException e) {
@@ -345,13 +334,6 @@ public class AwsSdk2Transport implements OpenSearchTransport {
             req.putHeader("x-amz-content-sha256", "required");
         }
 
-        // boolean responseCompression = Optional.ofNullable(options)
-        //    .map(o -> o instanceof AwsSdk2TransportOptions ? ((AwsSdk2TransportOptions) o) : null)
-        //    .map(AwsSdk2TransportOptions::responseCompression)
-        //    .or(() -> Optional.ofNullable(transportOptions.responseCompression()))
-        //    .orElse(Boolean.TRUE);
-        
-        // Java 8 compat
         boolean responseCompression;
         if (options != null &&  options instanceof AwsSdk2TransportOptions) {
             AwsSdk2TransportOptions awsSdk2TransportOptions = (AwsSdk2TransportOptions) options;
@@ -368,13 +350,6 @@ public class AwsSdk2Transport implements OpenSearchTransport {
             req.removeHeader("Accept-Encoding");
         }
 
-        // final AwsCredentialsProvider credentials = Optional.ofNullable(options)
-        //    .map(o -> o instanceof AwsSdk2TransportOptions ? ((AwsSdk2TransportOptions) o) : null)
-        //    .map(AwsSdk2TransportOptions::credentials)
-        //    .or(() -> Optional.ofNullable(transportOptions.credentials()))
-        //    .orElse(DefaultCredentialsProvider.create());
-
-        // Java 8 compat
         final AwsCredentialsProvider credentials;
         if (options != null &&  options instanceof AwsSdk2TransportOptions) {
             AwsSdk2TransportOptions awsSdk2TransportOptions = (AwsSdk2TransportOptions) options;
@@ -402,9 +377,7 @@ public class AwsSdk2Transport implements OpenSearchTransport {
             char sep = url.indexOf("?") < 0 ? '?' : '&';
             for (Map.Entry<String, String> param : params.entrySet()) {
                 url.append(sep).append(param.getKey()).append('=');
-                // url.append(URLEncoder.encode(param.getValue(), StandardCharsets.UTF_8));
-
-                // Java 8 compat
+  
                 try {
                     url.append(URLEncoder.encode(param.getValue(), StandardCharsets.UTF_8.name()));
                 } catch (UnsupportedEncodingException e) {
