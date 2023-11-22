@@ -22,4 +22,5 @@ gradle-app.setting
 
 .ci/output
 java-client/bin
+rest-client/bin
 samples/bin
